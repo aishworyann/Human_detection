@@ -4,22 +4,46 @@ import os
 import tensorflow
 import datetime
 
-IMG_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.tiff', '.gif']
-VID_EXTENSIONS = ['.mov', '.mp4', '.avi', '.mpg', '.mpeg', '.m4v', '.mkv']
-
 human_detected=False
-valid_file_alert= False
 error_alert= False
-def humanDetect(file_name, save_directory, yolo='yolov4', continuous=False, nth_frame=10, confidence=.65, gpu=False):
 
- global valid_file_alert
+def humanDetect(save_directory, yolo='yolov4', continuous=False, nth_frame=10, confidence=.65, gpu=False):
 
- #for human detection 
+ 
+ human_count=0
+ #for human detection
  is_humandetect=False
  is_valid=False
+ analyze_error=False
 
- if os.path.splitext(file_name)[1] in IMG_EXTENSIONS:
-     # to check if the extension of the the file in there in IMG_Extensions or not
-     frame=cv2.imread(file_name) #to read the image from the location
+ vid=cv2.VideoCapture(0,cv2.CAP_AVFOUNDATION)
+ while(True):
+                                                                        #for video
+#           vid.set(cv2.CAP_PROP_POS_FRAMES,frame_number)                #will make a set of frames with their position
+      _, frame=vid.read()
+      cv2.imshow('frame', frame)
+      try:
+          bbox,labels,conf= cvlib.detect_common_objects(frame, model=yolo, confidence=confidence, enable_gpu=gpu)
+      except Exception as e:
+          print(e)
+          analyze_error = True
+          pass
 
+      if 'people' in labels:
+         human_count+=1
+         is_humandetect=True
+         
+         marked_frame= cv2.object_detection.draw-bbox(frame, bbox, labels, conf, write_conf=True)
+         
+         save_file_name = os.path.basename('screenshot' + '-' + str(person_detection_counter) + '.jpeg')
+         cv2.imwrite(save_directory + '/' + save_file_name,marked_frame)
+     
+ vid.release()
+ 
+
+file_name='untitled.jpg'
+location='/Users/aishworyann/PycharmProjects/Human_detection/'
+yolo_string='yolov4'
+
+humanDetect(yolo_string)
 
