@@ -23,6 +23,7 @@ def humanDetect(save_directory, yolo='yolov4', continuous=False, nth_frame=10, c
             #           vid.set(cv2.CAP_PROP_POS_FRAMES,frame_number)                #will make a set of frames with their position
             ret , frame = vid.read()
             cv2.imshow('frame', frame)
+            cv2.waitKey(10) & 0xFF
             try:
                 bbox, labels, conf = cvlib.detect_common_objects(frame, model=yolo, confidence=confidence,enable_gpu=gpu)
             except Exception as e:
