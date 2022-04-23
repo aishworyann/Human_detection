@@ -1,29 +1,30 @@
 # Human_detection
 following is the code using cv2 and cvlib
 
-CODE STARTS->
+import following files->
 
-import cvlib
-import cv2
-import os
-import tensorflow
-import datetime
-import numpy as np
+     import cvlib
+     import cv2
+     import os
+     import tensorflow
+     import datetime
+     import numpy as np
 
 human_detected = False
 error_alert = False
 
+define a fucntion ->
 
-def humanDetect(save_directory, yolo='yolov4', continuous=False, nth_frame=10, confidence=.65, gpu=False):
-    human_count = 0
-    # for human detection
-    is_humandetect = False
-    is_valid = False
-    analyze_error = False
+    def humanDetect(save_directory, yolo='yolov4', continuous=False, nth_frame=10, confidence=.65, gpu=False):
+        human_count = 0
+         # for human detection
+        is_humandetect = False
+        is_valid = False
+         analyze_error = False
 
-    vid = cv2.VideoCapture(0)
-    while (vid.isOpened()):
-        while (True):
+       vid = cv2.VideoCapture(0)
+      while (vid.isOpened()):
+         while (True):
             # for video
             #           vid.set(cv2.CAP_PROP_POS_FRAMES,frame_number)                #will make a set of frames with their position
             ret , frame = vid.read()
@@ -45,14 +46,14 @@ def humanDetect(save_directory, yolo='yolov4', continuous=False, nth_frame=10, c
                 save_file_name = os.path.basename('screenshot' + '-' + str(person_detection_counter) + '.jpeg')
                 cv2.imwrite(save_directory + '/' + save_file_name, marked_frame)
 
-        vid.release()
-        cv2.destroyAllWindows()
-    else:
+          vid.release()
+          cv2.destroyAllWindows()
+      else:
         print("Alert ! Camera disconnected")
 
-location = '/Users/aishworyann/PycharmProjects/Human_detection/'
-yolo_string = 'yolov4'
+    location = '/Users/aishworyann/PycharmProjects/Human_detection/'
+    yolo_string = 'yolov4'
 
-humanDetect(location,yolo_string)
+    humanDetect(location,yolo_string)
 
 
